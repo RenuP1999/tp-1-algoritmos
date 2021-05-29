@@ -23,29 +23,42 @@ def Validacion_ingreso(letra):
     return len(letra) != 1
 
 def main():
-    palabra_referencia = "piton"
+    palabra_a_adivinar = "juego"
     acierto_desacierto = [0,0]
-    palabra = Calcular_palabra(palabra_referencia)
-    letras_no_acertadas = []
-    while acierto_desacierto[1] <= 7 and acierto_desacierto[0] < len(palabra):
-        print("xdbienvendidos xd?")
-        print("Palabra:", palabra)
-        print("Aciertos:", acierto_desacierto[0], "Desaciertos:", acierto_desacierto[1])
-        print("Letras no acertadas:", letras_no_acertadas)
+    palabra_con_signos_de_pregunta = Calcular_palabra(palabra_a_adivinar)
+    letras_no_acertadas = " "
+    print("Palabra a adivinar:", palabra_con_signos_de_pregunta, end = "    ")
+    print("Aciertos:", acierto_desacierto[0], "  -  Desaciertos:", acierto_desacierto[1]) 
+
+    while acierto_desacierto[1] <= 7  and  acierto_desacierto[0] < len(palabra_con_signos_de_pregunta):
         letra = input("Ingrese una letra: ")
-        if Validacion_ingreso(letra):
-            print("Es una letra, no una palabra")
+        
+        if not Ingreso_Valido(letra):
+            print("Debe ingresar una única letra.")
+      
         else:
-           if Existe_letra(letra, palabra_referencia):
-               if Es_repetida(palabra, letra):
-                    print("La letra que queres ingresar, ya fue ingresada :")
+
+           if Existe_letra(letra, palabra_a_adivinar):
+
+               if Es_repetida(palabra_con_signos_de_pregunta, letra):
+                
+                   print("La letra que queres ingresar ya fue ingresada, intenta con otra: ")
+
+
                else: 
-                    print("Bien xD")
-                    palabra = Construir_palabra(palabra_referencia, palabra, letra)
+                    palabra_con_signos_de_pregunta = Construir_palabra(palabra_a_adivinar, palabra_con_signos_de_pregunta, letra)
                     acierto_desacierto[0] += 1
+
+                    print("Bien!! ->  ", palabra_con_signos_de_pregunta, end = "  ") 
+                    print("Aciertos:", acierto_desacierto[0], "  -   Desaciertos:", acierto_desacierto[1], end = "  ")
+                    print("Letras no acertadas:", letras_no_acertadas)
+
            else:
                acierto_desacierto[1] += 1
-               letras_no_acertadas.append(letra)
+               letras_no_acertadas = agregar_letra_no_acertada(letras_no_acertadas, letra)
+               print("Lo siento!!! ->  ", palabra_con_signos_de_pregunta, end = "     ") 
+               print("Aciertos:", acierto_desacierto[0], " -  Desaciertos:", acierto_desacierto[1], end = " ;  ")
+               print("Letras no acertadas:", letras_no_acertadas)
 
     
 
